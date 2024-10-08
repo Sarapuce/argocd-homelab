@@ -1,4 +1,4 @@
-argocd:
+argo-cd:
   server:
     image:
       tag: v2.13.0-rc1
