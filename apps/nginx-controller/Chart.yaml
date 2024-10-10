@@ -1,0 +1,9 @@
+apiVersion: v2
+name: nginx-controller
+description: Nginx controller
+type: application
+version: v0.0.1
+dependencies:
+  - name: ingress-nginx
+    repository: https://kubernetes.github.io/ingress-nginx
+    version: 4.11.3
