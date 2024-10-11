@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: nginx-controller
-  namespace: nginx
+  namespace: argocd
   annotations:
     argocd.argoproj.io/manifest-generate-paths: .
   finalizers:
