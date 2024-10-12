@@ -4,6 +4,6 @@ description: External Secret
 type: application
 version: v0.0.1
 dependencies:
-  - name: external-secrets-operator
+  - name: external-secrets
     repository: https://charts.external-secrets.io/
     version: 0.10.4
