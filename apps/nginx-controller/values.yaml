@@ -2,3 +2,6 @@ ingress-nginx:
   controller:
     service:
       type: NodePort
+      nodePorts:
+        http: 30080
+        https: 30443
