@@ -1,0 +1,9 @@
+apiVersion: v2
+name: hello-world
+description: Hello World app
+type: application
+version: v0.0.1
+dependencies:
+  - name: crowdsec
+    repository: https://crowdsecurity.github.io/helm-charts
+    version: 0.2.1
