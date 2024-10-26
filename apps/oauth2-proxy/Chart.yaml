@@ -1,0 +1,9 @@
+apiVersion: v2
+name: oauth2-proxy
+description: OAuth2 proxy
+type: application
+version: v0.0.1
+dependencies:
+  - name: oauth2-proxy
+    repository: https://oauth2-proxy.github.io/manifests
+    version: 7.7.28
