@@ -11,7 +11,7 @@ spec:
       paths:
       - backend:
           service:
-            name: {{ include "helloworld.fullname" . }}
+            name: hello-world-helloworld
             port:
               number: 5678
         path: /
