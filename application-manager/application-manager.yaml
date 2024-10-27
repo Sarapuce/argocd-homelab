@@ -1,24 +1,21 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: oauth2-proxy
+  name: application-manager
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/manifest-generate-paths: .
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  destination:
-    namespace: oauth2-proxy
-    name: in-cluster
   project: default
+  destination:
+    namespace: argocd
+    name: in-cluster
   source:
     repoURL: git@github.com:sarapuce/argocd-homelab
     targetRevision: HEAD
-    path: apps/oauth2-proxy
+    path: application-set
   syncPolicy:
     automated:
+      prune: false
       selfHeal: true
-      prune: true
-    syncOptions:
-      - CreateNamespace=true

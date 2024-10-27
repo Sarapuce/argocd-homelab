@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: main
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: argocd
+        namespace: argocd
+      - appName: external-secret
+        namespace: external-secret
+      - appName: hello-world
+        namespace: hello-world
+      - appName: nginx-controller
+        namespace: nginx
+      - appName: oauth2-proxy
+        namespace: oauth2-proxy
+  template:
+    metadata:
+      name: "{{appName}}"
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: .
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:sarapuce/argocd-homelab
+        targetRevision: HEAD
+        path: "apps/{{appName}}"
+      destination:
+        name: in-cluster
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
