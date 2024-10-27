@@ -2,3 +2,13 @@ argo-cd:
   server:
     image:
       tag: v2.13.0-rc1
+    ingress:
+      enabled: true
+      ingressClassName: "public"
+      hostname: "argocd.sarapuce.fr"
+      annotations:
+        nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.nginx.svc.cluster.local/oauth2/auth"
+        nginx.ingress.kubernetes.io/auth-signin: "http://oauth2.sarapuce.fr:30080/oauth2/start?rd=https://$host$request_uri"
+  configs:
+    params:
+      server.insecure: true # To remove when OVH accept my domain name
