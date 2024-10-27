@@ -1,8 +1,2 @@
-helloworld:
-  ingress:
-    enabled: true
-    hosts:
-      - host: hello.sarapuce.fr
-        paths:
-          - path: /
+
 

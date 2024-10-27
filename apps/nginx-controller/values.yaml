@@ -5,3 +5,5 @@ ingress-nginx:
       nodePorts:
         http: 30080
         https: 30443
+    ingressClassResource:
+      name: public
