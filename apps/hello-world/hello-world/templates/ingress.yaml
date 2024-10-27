@@ -5,7 +5,7 @@ metadata:
   namespace: hello-world
   annotations:
     nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.nginx.svc.cluster.local/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "http://hello.sarapuce.fr/oauth2/start?rd=$http_host$request_uri"
+    nginx.ingress.kubernetes.io/auth-signin: "http://oauth2.sarapuce.fr:30080/oauth2/start?rd=https://$best_http_host$request_uri"
 spec:
   ingressClassName: public
   rules:

@@ -1,3 +1,32 @@
 oauth2-proxy:
+  ingress:
+    enabled: true
+    hosts:
+      - oauth2.sarapuce.fr
+    pathType: ImplementationSpecific
+    className: public
   config:
+    configFile: |-
+      redirect_url="http://oauth2.sarapuce.fr:30080/oauth2/callback"
+      login_url="https://accounts.google.com/o/oauth2/v2/auth"
+      redeem_url="https://oauth2.googleapis.com/token"
+      whitelist_domains="*.sarapuce.fr"
+      cookie_domains=".sarapuce.fr"
+      cookie_expire="48h"
+      scope="https://www.googleapis.com/auth/cloud-platform"
+      provider="google"
+      skip_provider_button="true"
+      session_store_type="cookie"
+      reverse_proxy="true"
+      pass_access_token="true"
+      pass_authorization_header="true"
+      cookie_csrf_per_request="true"
+      cookie_csrf_expire="5m"
+      cookie_refresh="5m"
+      set_xauthrequest="true"
+      set_authorization_header="false"
+      skip_auth_preflight="true"
+      skip_oidc_discovery=true
+      github_org="test-oauth2-proxy"
+      email_domains="*"
     existingSecret: oauth2-proxy
