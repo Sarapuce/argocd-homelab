@@ -4,22 +4,17 @@ metadata:
   name: main
   namespace: argocd
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
-  - list:
-      elements:
-      - appName: argocd
-        namespace: argocd
-      - appName: external-secret
-        namespace: external-secret
-      - appName: hello-world
-        namespace: hello-world
-      - appName: nginx-controller
-        namespace: nginx
-      - appName: oauth2-proxy
-        namespace: oauth2-proxy
+  - git:
+      repoURL: git@github.com:sarapuce/argocd-homelab
+      revision: HEAD
+      directories:
+        - path: apps/*/*
   template:
     metadata:
-      name: "{{appName}}"
+      name: "{{.path.basename}}"
       annotations:
         argocd.argoproj.io/manifest-generate-paths: .
       finalizers:
@@ -29,13 +24,13 @@ spec:
       source:
         repoURL: git@github.com:sarapuce/argocd-homelab
         targetRevision: HEAD
-        path: "apps/{{appName}}"
+        path: "{{.path.path}}"
       destination:
         name: in-cluster
-        namespace: "{{namespace}}"
+        namespace: "{{index .path.segments 1}}"
       syncPolicy:
         automated:
-          prune: false
-          selfHeal: false
+          prune: true
+          selfHeal: true
         syncOptions:
           - CreateNamespace=true
