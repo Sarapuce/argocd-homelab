@@ -6,6 +6,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.nginx.svc.cluster.local/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-signin: "http://oauth2.sarapuce.fr/oauth2/start?rd=https://hello.sarapuce.fr"
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
   ingressClassName: public
   rules:
@@ -19,3 +20,7 @@ spec:
               number: 5678
         path: /
         pathType: Prefix
+  tls:
+  - hosts:
+    - hello.sarapuce.fr
+    secretName: hello-world-cert
