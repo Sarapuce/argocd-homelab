@@ -9,6 +9,10 @@ argo-cd:
       annotations:
         nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.nginx.svc.cluster.local/oauth2/auth"
         nginx.ingress.kubernetes.io/auth-signin: "http://oauth2.sarapuce.fr/oauth2/start?rd=https://$host$request_uri"
+      extraTls:
+        - secretName: tls-secret
+          hosts:
+            - argocd.sarapuce.fr  
   configs:
     params:
-      server.insecure: true # To remove when OVH accept my domain name
+      server.insecure: true # https://github.com/argoproj/argo-cd/issues/2953 TLS is handled by nginx
