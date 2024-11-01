@@ -1,0 +1,5 @@
+apiVersion: v2
+name: certificate
+description: Wildcard certificate
+type: application
+version: v0.0.1

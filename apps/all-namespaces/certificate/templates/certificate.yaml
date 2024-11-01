@@ -1,13 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: wildcard-certificate
-  namespace: nginx
+  name: wildcard-certificate-test
+  namespace: hello-world
 spec:
   secretName: tls-secret
   issuerRef: 
     kind: ClusterIssuer
-    name: letsencrypt-staging-dns
+    name: letsencrypt-staging
   commonName: "*.sarapuce.fr"
   dnsNames:
     - "*.sarapuce.fr"
