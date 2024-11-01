@@ -5,6 +5,10 @@ oauth2-proxy:
       - oauth2.sarapuce.fr
     pathType: ImplementationSpecific
     className: public
+    tls:
+      - secretName: tls-secret
+        hosts:
+          - oauth2.sarapuce.fr
   config:    
     configFile: |-
       redirect_url="/oauth2/callback"
