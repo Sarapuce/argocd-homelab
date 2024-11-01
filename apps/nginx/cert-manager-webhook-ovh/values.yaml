@@ -9,6 +9,23 @@ cert-manager-webhook-ovh:
       create: true
       acmeServerUrl: https://acme-staging-v02.api.letsencrypt.org/directory
       email: olo76olo@gmail.com
+      ovhEndpointName: ovh-eu
+      ovhAuthenticationRef:
+        applicationKeyRef:
+          name: ovh-credentials
+          key: applicationKey
+        applicationSecretRef:
+          name: ovh-credentials
+          key: applicationSecret
+        consumerKeyRef:
+          name: ovh-credentials
+          key: consumerKey
+    - name: letsencrypt-dns
+      kind: ClusterIssuer
+      create: true
+      acmeServerUrl: https://acme-v02.api.letsencrypt.org/directory
+      email: olo76olo@gmail.com
+      ovhEndpointName: ovh-eu
       ovhAuthenticationRef:
         applicationKeyRef:
           name: ovh-credentials
