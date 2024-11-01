@@ -1,0 +1,11 @@
+# https://github.com/aureq/cert-manager-webhook-ovh
+# https://aureq.github.io/cert-manager-webhook-ovh/
+apiVersion: v2
+name: cert-manager-webhook-ovh
+description: Cert Manager OVH webhook
+type: application
+version: v0.0.1
+dependencies:
+  - name: cert-manager-webhook-ovh
+    repository: https://aureq.github.io/cert-manager-webhook-ovh/
+    version: 0.7.0
