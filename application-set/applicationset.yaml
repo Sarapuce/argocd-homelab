@@ -12,8 +12,8 @@ spec:
       revision: HEAD
       directories:
         - path: apps/*/*
-        # - path: apps/all-namespaces/*
-        #   exclude: true
+        - path: apps/all-namespaces/*
+          exclude: true
   template:
     metadata:
       name: "{{.path.basename}}"
@@ -30,6 +30,47 @@ spec:
       destination:
         name: in-cluster
         namespace: "{{index .path.segments 1}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: all-namespaces
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: git@github.com:sarapuce/argocd-homelab
+      revision: HEAD
+      directories:
+        - path: apps/*
+        - path: apps/all-namespaces
+          exclude: true
+  template:
+    metadata:
+      name: "certificate-{{.path.basename}}"
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: .
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: all-namespaces # To avoid polluting the default project
+      source:
+        repoURL: git@github.com:sarapuce/argocd-homelab
+        targetRevision: HEAD
+        path: "apps/all-namespaces/certificate" # Only certificate today, probably need a matrix generator if more charts are added
+        helm:
+          releaseName: "certificate-{{.path.basename}}"
+      destination:
+        name: in-cluster
+        namespace: "{{.path.basename}}"
       syncPolicy:
         automated:
           prune: true
