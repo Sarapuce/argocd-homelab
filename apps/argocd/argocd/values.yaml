@@ -16,3 +16,5 @@ argo-cd:
   configs:
     params:
       server.insecure: true # https://github.com/argoproj/argo-cd/issues/2953 TLS is handled by nginx
+    secret:
+      githubSecret: "test"
