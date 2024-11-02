@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-webhook
+  namespace: argocd
+spec:
+  ingressClassName: public
+  rules:
+  - host: argocd.sarapuce.fr
+    http:
+      paths:
+      - path: /api/webhook
+        pathType: Exact
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - argocd.sarapuce.fr
+    secretName: tls-secret
