@@ -1,0 +1,5 @@
+apiVersion: v2
+name: deluge
+description: Deluge
+type: application
+version: v0.0.1

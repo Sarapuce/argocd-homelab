@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deluge
+  labels:
+    app: deluge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deluge
+  template:
+    metadata:
+      labels:
+        app: deluge
+    spec:
+      containers:
+      - name: deluge
+        image: lscr.io/linuxserver/deluge:2.1.1
+        env:
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          - name: TZ
+            value: "Etc/UTC"
+        ports:
+          - containerPort: 8112
+            name: web
+          - containerPort: 6881
+            name: torrent-tcp
+          - containerPort: 6881
+            protocol: UDP
+            name: torrent-udp
+          - containerPort: 58846 # optional
+            name: thin-client
+        volumeMounts:
+          - name: config-volume
+            mountPath: /config
+          - name: downloads-volume
+            mountPath: /downloads
+      volumes:
+      - name: config-volume
+        emptyDir:
+          sizeLimit: 50Mi
+      - name: downloads-volume
+        emptyDir:
+          sizeLimit: 1Gi
