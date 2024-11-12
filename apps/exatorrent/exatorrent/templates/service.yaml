@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    argocd.argoproj.io/instance: exatorrent
+  name: exatorrent-service
+  namespace: exatorrent
+spec:
+  ports:
+    - name: http
+      port: 5000
+      protocol: TCP
+      targetPort: http
+    - name: torrent
+      port: 42069
+      protocol: TCP
+      targetPort: torrent
+  selector:
+    app: exatorrent
+  type: ClusterIP
