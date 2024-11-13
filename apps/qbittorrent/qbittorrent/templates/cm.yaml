@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: qbittorrent-config
+data:
+  qBittorrent.conf: |
+    [Preferences]
+    WebUI\Password_PBKDF2="to_replace_password"
+    WebUI\Username=to_replace_username

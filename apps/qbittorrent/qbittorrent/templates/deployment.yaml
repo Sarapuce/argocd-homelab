@@ -15,9 +15,37 @@ spec:
       labels:
         app: qbittorrent
     spec:
+      initContainers:
+        - name: settings
+          image: busybox
+          command:
+            - "sh"
+            - "-c"
+            - >
+              cp /config-ro/qBittorrent.conf /config/qBittorrent/qBittorrent.conf &&
+              sed -i "s/to_replace_username/${USERNAME}/g" /config/qBittorrent/qBittorrent.conf &&
+              ESCAPED_PASSWORD=$(printf '%s\n' $PASSWORD | sed 's/[\/&]/\\&/g') &&
+              sed -i "s/to_replace_password/${ESCAPED_PASSWORD}/g" /config/qBittorrent/qBittorrent.conf
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: qbittorrent-creds
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: qbittorrent-creds
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/qBittorrent
+            - name: config-ro-volume
+              mountPath: /config-ro
       containers:
         - image: lscr.io/linuxserver/qbittorrent:5.0.1
           name: qbittorrent
+          command: ['sh', '-c', '/init']
           ports:
             - containerPort: 8080
               name: http
@@ -39,12 +67,15 @@ spec:
             - name: TORRENTING_PORT
               value: "6881"
           volumeMounts:
-            - mountPath: /config
+            - mountPath: /config/qBittorrent
               name: config-volume
             - mountPath: /downloads
               name: download-volume
       volumes:
-        - emptyDir:
+        - configMap:
+            name: qbittorrent-config
+          name: config-ro-volume
+        - emplyDir:
             sizeLimit: 500Mi
           name: config-volume
         - emptyDir:
