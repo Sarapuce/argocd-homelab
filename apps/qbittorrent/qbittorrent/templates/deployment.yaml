@@ -42,7 +42,9 @@ spec:
             - mountPath: /config/qBittorrent
               name: config-volume
             - mountPath: /downloads
-              name: download-volume
+              name: download-volume 
+          securityContext:
+            allowPrivilegeEscalation: false # Container run as root by design. Qbittorrent runs as user 1000
       volumes:
         - name: config-volume
           persistentVolumeClaim:
