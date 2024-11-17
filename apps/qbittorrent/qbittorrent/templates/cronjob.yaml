@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: update-ip-blocklist
+spec:
+  schedule: "2 3 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: busybox:1.37.0
+            command:
+            - /bin/sh
+            - -c
+            - |
+              wget https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz -O list.gz;
+              gunzip list.gz;
+              cat list | awk -F: '{print "France:" $2}' > /config/qBittorrent/blocklist.p2p
+            volumeMounts:
+              - mountPath: /config/qBittorrent
+                name: config-volume
+          restartPolicy: OnFailure
+          volumes:
+          - name: config-volume
+            persistentVolumeClaim:
+              claimName: qbittorrent-config-pvc
+# Not enough, should make a http call to qBittorrent to reload the blocklist but I'm lazy
