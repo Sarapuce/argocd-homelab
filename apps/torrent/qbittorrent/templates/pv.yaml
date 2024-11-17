@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: qbittorrent-config-pv
+  labels:
+    name: qbittorrent-config
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteMany
+  mountOptions:
+    - nfsvers=4
+  nfs:
+    path: /volume1/qbittorrentconfig
+    server: nas.sarapuce.fr
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: qbittorrent-config-pvc
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 200Mi
+  selector:
+    matchLabels:
+      name: qbittorrent-config
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: qbittorrent-download-pv
+  labels:
+    name: qbittorrent-download
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  mountOptions:
+    - nfsvers=4
+  nfs:
+    path: /volume1/qbittorrentdownload
+    server: nas.sarapuce.fr
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: qbittorrent-download-pvc
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Ti
+  selector:
+    matchLabels:
+      name: qbittorrent-download
