@@ -5,7 +5,6 @@ metadata:
     nginx.ingress.kubernetes.io/auth-signin: https://oauth2.sarapuce.fr/oauth2/start?rd=https://$host$request_uri
     nginx.ingress.kubernetes.io/auth-url: http://oauth2-proxy.nginx.svc.cluster.local/oauth2/auth
   name: qbittorrent-web-ui
-  namespace: qbittorrent
 spec:
   ingressClassName: public
   rules:
