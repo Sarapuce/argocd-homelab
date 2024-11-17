@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-config-pv
+  labels:
+    name: radarr-config
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteMany
+  mountOptions:
+    - nfsvers=4
+  nfs:
+    path: /volume1/radarrconfig
+    server: nas.sarapuce.fr
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-config-pvc
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 200Mi
+  selector:
+    matchLabels:
+      name: radarr-config
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-movie-pv
+  labels:
+    name: radarr-movie
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  mountOptions:
+    - nfsvers=4
+  nfs:
+    path: /volume1/radarrmovie
+    server: nas.sarapuce.fr
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-movie-pvc
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      name: radarr-movie

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: radarr
+  name: radarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      containers:
+        - image: lscr.io/linuxserver/radarr:5.14.0
+          name: radarr
+          ports:
+            - containerPort: 7878
+              name: http
+          env:
+            - name: PUID
+              value: "0" # Don't work if not root
+            - name: PGID
+              value: "0"
+            - name: TZ
+              value: "Etc/UTC"
+          volumeMounts:
+            - mountPath: /config
+              name: config-volume
+            - mountPath: /downloads
+              name: download-volume
+            - mountPath: /movies
+              name: movies-volume
+      volumes:
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: radarr-config-pvc
+        - name: download-volume
+          persistentVolumeClaim:
+            claimName: qbittorrent-download-pvc
+        - name: movies-volume
+          persistentVolumeClaim:
+            claimName: radarr-movie-pvc
+        

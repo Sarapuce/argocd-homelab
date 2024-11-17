@@ -1,0 +1,5 @@
+apiVersion: v2
+name: radarr
+description: Radarr is a movie collection manager
+type: application
+version: v0.0.1
