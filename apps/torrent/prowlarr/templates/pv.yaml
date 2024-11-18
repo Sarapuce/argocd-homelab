@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prowlarr-config-pv
+  labels:
+    name: prowlarr-config
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteMany
+  mountOptions:
+    - nfsvers=4
+  nfs:
+    path: /volume1/prowlarrconfig
+    server: nas.sarapuce.fr
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prowlarr-config-pvc
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 200Mi
+  selector:
+    matchLabels:
+      name: prowlarr-config

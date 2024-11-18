@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: prowlarr
+  name: prowlarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prowlarr
+  template:
+    metadata:
+      labels:
+        app: prowlarr
+    spec:
+      containers:
+        - image: lscr.io/linuxserver/prowlarr:1.25.4
+          name: prowlarr
+          ports:
+            - containerPort: 9696
+              name: http
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Etc/UTC"
+          volumeMounts:
+            - mountPath: /config
+              name: config-volume
+      volumes:
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: prowlarr-config-pvc

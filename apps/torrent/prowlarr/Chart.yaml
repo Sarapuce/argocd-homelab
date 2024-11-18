@@ -1,0 +1,5 @@
+apiVersion: v2
+name: prowlarr
+description: Prowlaar is an indexer manager
+type: application
+version: v0.0.1
