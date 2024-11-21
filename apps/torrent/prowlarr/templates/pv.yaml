@@ -10,12 +10,8 @@ spec:
     storage: 200Mi
   accessModes:
     - ReadWriteMany
-  mountOptions:
-    - nfsvers=4
-  nfs:
-    path: /volume1/prowlarrconfig
-    server: nas.sarapuce.fr
-    readOnly: false
+  hostPath:
+    path: "/var/prowlarr/config"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
