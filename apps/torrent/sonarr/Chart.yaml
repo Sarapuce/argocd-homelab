@@ -1,0 +1,5 @@
+apiVersion: v2
+name: sonarr
+description: Sonarr is a serie collection manager
+type: application
+version: v0.0.1
