@@ -1,0 +1,27 @@
+longhorn:
+  longhornUI:
+    replicas: 1
+
+  ingress:
+    enabled: true
+    host: longhorn.sarapuce.fr
+    tls: true
+    tlsSecret: tls-secret
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.nginx.svc.cluster.local/oauth2/auth"
+      nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.sarapuce.fr/oauth2/start?rd=https://$host$request_uri"
+
+  defaultSettings:
+    defaultReplicaCount: 2
+    
+  persistence:
+    defaultClassReplicaCount: 2
+
+  preUpgradeChecker:
+    jobEnabled: false
+
+  csi:
+    attacherReplicaCount: 1
+    provisionerReplicaCount: 1
+    resizerReplicaCount: 1
+    snapshotterReplicaCount: 1
