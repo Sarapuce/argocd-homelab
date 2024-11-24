@@ -13,10 +13,10 @@ longhorn:
       nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.sarapuce.fr/oauth2/start?rd=https://$host$request_uri"
 
   defaultSettings:
-    defaultReplicaCount: 2
+    defaultReplicaCount: 1 # Only one node for the moment
     
   persistence:
-    defaultClassReplicaCount: 2
+    defaultClassReplicaCount: 1
 
   preUpgradeChecker:
     jobEnabled: false
