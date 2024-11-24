@@ -5,7 +5,7 @@ metadata:
   labels:
     name: prowlarr-config
 spec:
-  storageClassName: standard
+  storageClassName: longhorn
   capacity:
     storage: 200Mi
   accessModes:
@@ -18,7 +18,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: prowlarr-config-pvc
 spec:
-  storageClassName: standard
+  storageClassName: longhorn
   accessModes:
     - ReadWriteMany
   resources:
