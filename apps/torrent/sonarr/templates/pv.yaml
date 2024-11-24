@@ -1,59 +1,23 @@
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: sonarr-config-pv
-  labels:
-    name: sonarr-config
-spec:
-  storageClassName: standard
-  capacity:
-    storage: 200Mi
-  accessModes:
-    - ReadWriteMany
-  hostPath:
-    path: "/var/sonarr/config" # OK because mononode for now
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: sonarr-config-pvc
 spec:
-  storageClassName: standard
+  storageClassName: longhorn
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 200Mi
-  selector:
-    matchLabels:
-      name: sonarr-config
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: sonarr-tv-pv
-  labels:
-    name: sonarr-tv
-spec:
-  storageClassName: standard
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteMany
-  hostPath:
-    path: "/var/sonarr/tv"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: sonarr-tv-pvc
 spec:
-  storageClassName: standard
+  storageClassName: longhorn
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 10Gi
-  selector:
-    matchLabels:
-      name: sonarr-tv
+      storage: 1Gi
