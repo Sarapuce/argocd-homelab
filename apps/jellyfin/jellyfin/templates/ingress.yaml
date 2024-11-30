@@ -1,9 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/auth-signin: https://oauth2.sarapuce.fr/oauth2/start?rd=https://$host$request_uri
-    nginx.ingress.kubernetes.io/auth-url: http://oauth2-proxy.nginx.svc.cluster.local/oauth2/auth
+  # annotations:
+  #   nginx.ingress.kubernetes.io/auth-signin: https://oauth2.sarapuce.fr/oauth2/start?rd=https://$host$request_uri
+  #   nginx.ingress.kubernetes.io/auth-url: http://oauth2-proxy.nginx.svc.cluster.local/oauth2/auth
   name: jellyfin-web
 spec:
   ingressClassName: public
