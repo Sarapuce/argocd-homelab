@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jellyfin
+  name: jellyfin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+        - image: jellyfin/jellyfin:10.10.3
+          name: jellyfin
+          ports:
+            - containerPort: 8096
+              name: http
+          volumeMounts:
+            - mountPath: /config
+              name: config-volume
+            - mountPath: /cache
+              name: cache-volume
+            - mountPath: /media
+              name: media-volume
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 1000
+            runAsGroup: 1000
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: jellyfin-config-pvc
+        - name: cache-volume
+          persistentVolumeClaim:
+            claimName: jellyfin-cache-pvc
+        - name: media-volume
+          persistentVolumeClaim:
+            claimName: jellyfin-media-pvc
+        

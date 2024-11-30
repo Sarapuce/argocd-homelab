@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/auth-signin: https://oauth2.sarapuce.fr/oauth2/start?rd=https://$host$request_uri
+    nginx.ingress.kubernetes.io/auth-url: http://oauth2-proxy.nginx.svc.cluster.local/oauth2/auth
+  name: jellyfin-web
+spec:
+  ingressClassName: public
+  rules:
+  - host: jellyfin.sarapuce.fr
+    http:
+      paths:
+      - backend:
+          service:
+            name: jellyfin-service
+            port:
+              number: 8096
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - jellyfin.sarapuce.fr
+    secretName: tls-secret

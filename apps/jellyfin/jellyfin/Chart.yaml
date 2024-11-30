@@ -1,0 +1,5 @@
+apiVersion: v2
+name: jellyfin
+description: Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media.
+type: application
+version: v0.0.1
