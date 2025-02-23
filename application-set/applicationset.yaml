@@ -14,6 +14,10 @@ spec:
         - path: apps/*/*
         - path: apps/all-namespaces/*
           exclude: true
+        - path: apps/torrent/*
+          exclude: true
+        - path: apps/jellyfin/*
+          exclude: true
   template:
     metadata:
       name: "{{.path.basename}}"
