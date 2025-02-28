@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/auth-signin: https://oauth2.sarapuce.fr/oauth2/start?rd=https://$host$request_uri
+    nginx.ingress.kubernetes.io/auth-url: http://oauth2-proxy.nginx.svc.cluster.local/oauth2/auth
+  name: download
+spec:
+  ingressClassName: public
+  rules:
+  - host: download.sarapuce.fr
+    http:
+      paths:
+      - backend:
+          service:
+            name: download
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - download.sarapuce.fr
+    secretName: tls-secret

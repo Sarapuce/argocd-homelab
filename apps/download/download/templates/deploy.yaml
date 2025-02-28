@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: download
+  name: download
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: download
+  template:
+    metadata:
+      labels:
+        app: download
+    spec:
+      containers:
+        - image: nginx:latest
+          name: nginx
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html/download
+              name: download-volume 
+          securityContext:
+            allowPrivilegeEscalation: false
+      volumes:
+        - name: download-volume
+          persistentVolumeClaim:
+            claimName: download-pvc
+        
