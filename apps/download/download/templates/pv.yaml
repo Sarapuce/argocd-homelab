@@ -15,7 +15,7 @@ spec:
   nfs:
     path: /volume1/qbittorrentdownload
     server: nas.sarapuce.fr
-    readOnly: true
+    readOnly: false
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
